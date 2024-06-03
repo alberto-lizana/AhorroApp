@@ -9,17 +9,20 @@ import { AlertController } from '@ionic/angular';
 })
 export class Page1Page implements OnInit {
 
-  nombre: string = "";
-  apellido: string = "";
-  usuario: string = "";
-  contrasena: string = "";
+  nombre!: string;
+  apellido!: string;
+  usuario!: string;
+  contrasena!: string;
 
-  sueldo: number = 0;
-  montoObjetivo: number = 0;
-  porcentaje: number = 0;
-  ahorroMensual: number = 0;
-  tiempoParaAlcanzarMeta: number = 0;
-  montoDisponible: number = 0;
+  sueldo!: number;
+  montoObjetivo!: number;
+  porcentaje!: number;
+  ahorroMensual!: number;
+  tiempoParaAlcanzarMeta!: number; 
+  montoDisponible!: number;
+  Rcontrasena!: string;
+  selectedOption!: number;
+
   montoEnReduccion: number = 0;
 
   valorASumarMercaderia: number = 0;
@@ -46,10 +49,14 @@ export class Page1Page implements OnInit {
         this.apellido = this.router.getCurrentNavigation()?.extras?.state?.['apellido'];
         this.usuario = this.router.getCurrentNavigation()?.extras?.state?.['usuario'];
         this.contrasena = this.router.getCurrentNavigation()?.extras?.state?.['contrasena'];
+    
+        this.Rcontrasena = this.router.getCurrentNavigation()?.extras?.state?.['Rcontrasena'];
+        this.selectedOption = this.router.getCurrentNavigation()?.extras?.state?.['selectedOption'];
         
         this.sueldo = this.router.getCurrentNavigation()?.extras?.state?.['sueldo'];
         this.montoObjetivo = this.router.getCurrentNavigation()?.extras?.state?.['montoObjetivo'];
         this.porcentaje = this.router.getCurrentNavigation()?.extras?.state?.['porcentaje'];
+        
         this.ahorroMensual = this.router.getCurrentNavigation()?.extras?.state?.['ahorroMensual'];
         this.tiempoParaAlcanzarMeta = this.router.getCurrentNavigation()?.extras?.state?.['tiempoParaAlcanzarMeta'];
         this.montoDisponible = this.router.getCurrentNavigation()?.extras?.state?.['montoDisponible'];
@@ -85,10 +92,21 @@ export class Page1Page implements OnInit {
       valorTotalEntretenimiento: this.valorTotalEntretenimiento,
       porcentajeMercaderia: this.porcentajeMercaderia,
       porcentajeServicios: this.porcentajeServicios,
-      porcentajeEntretenimiento: this.porcentajeEntretenimiento
+      porcentajeEntretenimiento: this.porcentajeEntretenimiento,
+      nombre: this.nombre,
+      apellido: this.apellido,
+      usuario: this.usuario,
+      contrasena: this.contrasena,
+      sueldo: this.sueldo,
+      montoObjetivo: this.montoObjetivo,
+      porcentaje: this.porcentaje,
+      ahorroMensual: this.ahorroMensual,
+      tiempoParaAlcanzarMeta: this.tiempoParaAlcanzarMeta,
+      montoDisponible: this.montoDisponible
     };
     localStorage.setItem('financialState', JSON.stringify(state));
   }
+
 
   async sumarGasto(categoria: string, valorASumar: number) {
     if (valorASumar > this.montoEnReduccion) {

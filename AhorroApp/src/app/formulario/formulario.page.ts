@@ -20,10 +20,9 @@ export class FormularioPage implements OnInit {
   porcentaje!: number;
   ahorroMensual!: number;
   tiempoParaAlcanzarMeta!: number; 
-  montoDisponible!: number;
+  montoDisponible: number = 0;
   Rcontrasena!: string;
-  selectedOption!: string;
-  selectedDate!: Date;
+  selectedOption!: number;
   
 
   constructor(private router: Router, private activateroute: ActivatedRoute,private alertController: AlertController,) 
@@ -37,7 +36,6 @@ export class FormularioPage implements OnInit {
 
         this.Rcontrasena = this.router.getCurrentNavigation()?.extras?.state?.['Rcontrasena'];
         this.selectedOption = this.router.getCurrentNavigation()?.extras?.state?.['selectedOption'];
-        this.selectedDate = this.router.getCurrentNavigation()?.extras?.state?.['selectedDate'];
       }
     });
 }
@@ -84,6 +82,9 @@ export class FormularioPage implements OnInit {
   }
 
   crearMeta() {
+    if (this.sueldo === null || this.montoObjetivo === null || this.porcentaje === null || this.porcentaje > 100 || this.porcentaje < 0) {
+      return this.presentAlert('¡Error!', 'Por favor, llene todos los campos')
+    } else {
       let navigationExtras: NavigationExtras = {
         state: {
           nombre: this.nombre,
@@ -92,7 +93,6 @@ export class FormularioPage implements OnInit {
           contrasena: this.contrasena,
           Rcontrasena: this.Rcontrasena,
           selectedOption: this.selectedOption,
-          selectedDate: this.selectedDate,
   
           sueldo: this.sueldo,
           montoObjetivo: this.montoObjetivo,
@@ -103,6 +103,8 @@ export class FormularioPage implements OnInit {
         }
       };
       this.router.navigate(['/pages/page0'], navigationExtras);
-      return this.presentAlert('¡Éxito!', 'Meta creada exitosamente');
-      }
+      this.presentAlert('¡Éxito!', 'Meta creada exitosamente');
+    }
+    return;
+  }
 }

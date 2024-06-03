@@ -14,12 +14,12 @@ export class LoginPage implements OnInit {
   usuarioLogIn: string = "";
   contrasenaLogIn: string = "";
 
-  nombre: string = "";
-  apellido: string = "";
-  contrasena: string = "";
-  usuario: string = "";
-  Rcontrasena: string = "";
-  selectedOption: string = "";
+  nombre!: string;
+  apellido!: string;
+  contrasena!: string;
+  usuario!: string;
+  Rcontrasena!: string;
+  selectedOption!: number;
 
 
   constructor(
@@ -44,8 +44,7 @@ export class LoginPage implements OnInit {
   }
 
   login(){
-    if (this.usuarioLogIn.toLowerCase() == this.usuario.toLowerCase()  && this.contrasenaLogIn.toLowerCase() == this.contrasena.toLowerCase() ) {
-      this.presentAlert('Correcto','Sesión iniciada correctamente');
+    if (this.usuarioLogIn.toLowerCase() === this.usuario.toLowerCase()  && this.contrasenaLogIn.toLowerCase() === this.contrasena.toLowerCase() ) {
       let navigationExtras: NavigationExtras = {
         state: {
           nombre: this.nombre,
@@ -57,8 +56,9 @@ export class LoginPage implements OnInit {
           selectedOption: this.selectedOption,
         }
       };
+      this.presentAlert('Correcto','Sesión iniciada correctamente');
       this.router.navigate(['/formulario'], navigationExtras);
-    } else if (this.usuarioLogIn.length > 8 || this.usuarioLogIn.length < 3) {
+    } else if (this.usuarioLogIn.trim().length > 8 || this.usuarioLogIn.trim().length < 3) {
       this.presentAlert('Error', 'El nombre de usuario no debe ser mayor a 8 caracteres ni menor a 3');
     } else if (this.contrasenaLogIn.length > 4) {
       this.presentAlert('Error', 'La contraseña no debe ser mayor a 4 caracteres');

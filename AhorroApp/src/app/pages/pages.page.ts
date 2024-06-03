@@ -14,7 +14,7 @@ export class PagesPage implements OnInit {
   titulo!: string;
 
   Rcontrasena!: string;
-  selectedOption!: string;
+  selectedOption!: number;
 
   sueldo!: number;
   montoObjetivo!: number;

@@ -11,60 +11,95 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-card>
-    <ion-card-title>
-      <h3>Bienvenido {{nombre}} {{apellido}}</h3>
-    </ion-card-title>
+  <ion-card class="fondo-card">
+    <ion-card-content>
+      <ion-item style="--background: #2E7D32; --color: #ffffff;">
+        <h3 class="letra-texto">Disponible:</h3> 
+        <p class="letra-texto">{{ montoEnReduccion }}</p>
+      </ion-item>
+    </ion-card-content>
   </ion-card>
 
-  <div class="ion-text-center">
-    <ion-card-content>
-      <ion-item>
-        <p>
-          Según los datos que nos has proporcionado, 
-          deseamos ayudarte a distribuir tus gastos de manera más eficiente, adaptándonos a tus necesidades. 
-          Por ello, hemos subdividido tus gastos en diferentes categorías: <br>
-          1.- Mercadería (compras de supermercado, comida, etc.) <br>
-          2.- Servicios (luz, agua, gas, internet, colegios, bencina, transporte, arriendo, hipoteca, salud, etc.) <br>
-          3.- Entretenimiento (salidas, cine, teatro, deportes, etc.) <br>
-          Esta subdivisión te permitirá tener un mayor control sobre tus finanzas y optimizar tu capacidad de ahorro. <br>
-        </p>
-      </ion-item>
+  <ion-card class="fondo">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" class="letra-label">Mercadería</ion-label>
+            <ion-input type="number" placeholder="Ingresa un valor" [(ngModel)]="valorASumarMercaderia"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" shape="round" color="warning"  (click)="sumarGasto('mercaderia', valorASumarMercaderia)">Sumar</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="text-left">
+          <h3 class="letra-texto">Porcentaje:</h3>
+        </ion-col>
+        <ion-col>
+          <p class="letra-texto">{{ porcentajeMercaderia }}%</p> 
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-      <ion-item>
-        <ion-label position="stacked">Monto disponible</ion-label>
-        <p>Disponible: {{ montoEnReduccion }}</p>
-      </ion-item>
-      
-    </ion-card-content>
-  </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" class="letra-label">Servicios</ion-label>
+            <ion-input type="number" placeholder="Ingresa un valor" [(ngModel)]="valorASumarServicios"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" shape="round" color="warning"  (click)="sumarGasto('servicios', valorASumarServicios)">Sumar</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="text-left">
+          <h3 class="letra-texto">Porcentaje:</h3>
+        </ion-col>
+        <ion-col>
+          <p class="letra-texto">{{ porcentajeServicios }}%</p> 
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-  <ion-item>
-    <ion-label position="stacked">Mercadería</ion-label>
-    <ion-input type="number" placeholder="Ingresa un valor" [(ngModel)]="valorASumarMercaderia"></ion-input>
-    <ion-button color="medium" (click)="sumarGasto('mercaderia', valorASumarMercaderia)">Sumar</ion-button>
-    <p>Disponible: {{ montoEnReduccion }}</p>
-    <p>Equivalente al porcentaje: {{ porcentajeMercaderia }}%</p> 
-  </ion-item>
-  
-  <ion-item>
-    <ion-label position="stacked">Servicios</ion-label>
-    <ion-input type="number" placeholder="Ingresa un valor" [(ngModel)]="valorASumarServicios"></ion-input>
-    <ion-button color="medium" (click)="sumarGasto('servicios', valorASumarServicios)">Sumar</ion-button>
-    <p>Disponible: {{ montoEnReduccion }}</p>
-    <p>Equivalente al porcentaje: {{ porcentajeServicios }}%</p> 
-  </ion-item>
-  
-  <ion-item>
-    <ion-label position="stacked">Entretenimiento</ion-label>
-    <ion-input type="number" placeholder="Ingresa un valor" [(ngModel)]="valorASumarEntretenimiento"></ion-input>
-    <ion-button color="medium" (click)="sumarGasto('entretenimiento', valorASumarEntretenimiento)">Sumar</ion-button>
-    <p>Disponible: {{ montoEnReduccion }}</p>
-    <p>Equivalente al porcentaje: {{ porcentajeEntretenimiento }}%</p> 
-  </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" class="letra-label">Entretenimiento</ion-label>
+            <ion-input type="number" placeholder="Ingresa un valor" [(ngModel)]="valorASumarEntretenimiento"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" shape="round" color="warning"  (click)="sumarGasto('entretenimiento', valorASumarEntretenimiento)">Sumar</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="text-left">
+          <h3 class="letra-texto">Porcentaje:</h3>
+        </ion-col>
+        <ion-col>
+          <p class="letra-texto">{{ porcentajeEntretenimiento }}%</p> 
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-  <ion-item>
-    <ion-button expand="block" color="medium" (click)="reiniciar()">Reiniciar</ion-button>
-  </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+            <ion-button expand="block" shape="round" color="tertiary" (click)="reiniciar()"  class="boton-centrado">Reiniciar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 
 </ion-content>
