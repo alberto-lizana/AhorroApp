@@ -54,12 +54,18 @@ export class HomePage {
       this.nombre = '';
       this.apellido = '';
       this.selectedOption = '';
+      this.usuario = '';
+      this.contrasena = '';
+      this.Rcontrasena = '';
       this.animationState = 'out'; 
 
     } else {
       this.nombre = '';
       this.apellido = '';
       this.selectedOption = '';
+      this.usuario = '';
+      this.contrasena = '';
+      this.Rcontrasena = '';
       this.animationState = 'in'; 
     }
   }
