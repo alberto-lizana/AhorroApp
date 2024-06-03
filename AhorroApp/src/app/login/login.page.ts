@@ -44,29 +44,28 @@ export class LoginPage implements OnInit {
   }
 
   login(){
-    if (this.usuarioLogIn.toLowerCase() === this.usuario.toLowerCase()  && this.contrasenaLogIn.toLowerCase() === this.contrasena.toLowerCase() ) {
-      let navigationExtras: NavigationExtras = {
-        state: {
-          nombre: this.nombre,
-          apellido: this.apellido,
-          usuario: this.usuario,
-          contrasena: this.contrasena,
-
-          Rcontrasena: this.Rcontrasena,
-          selectedOption: this.selectedOption,
-        }
-      };
-      this.presentAlert('Correcto','Sesión iniciada correctamente');
-      this.router.navigate(['/formulario'], navigationExtras);
-    } else if (this.usuarioLogIn.trim().length > 8 || this.usuarioLogIn.trim().length < 3) {
-      this.presentAlert('Error', 'El nombre de usuario no debe ser mayor a 8 caracteres ni menor a 3');
+    if (this.usuarioLogIn.trim().length < 3 || this.usuarioLogIn.trim().length > 8) {
+        this.presentAlert('Error', 'El nombre de usuario debe tener entre 3 y 8 caracteres');
     } else if (this.contrasenaLogIn.length > 4) {
-      this.presentAlert('Error', 'La contraseña no debe ser mayor a 4 caracteres');
+        this.presentAlert('Error', 'La contraseña no debe tener más de 4 caracteres');
+    } else if (this.usuarioLogIn.toLowerCase() === this.usuario.toLowerCase() && this.contrasenaLogIn.toLowerCase() === this.contrasena.toLowerCase()) {
+        let navigationExtras: NavigationExtras = {
+            state: {
+                nombre: this.nombre,
+                apellido: this.apellido,
+                usuario: this.usuario,
+                contrasena: this.contrasena,
+                Rcontrasena: this.Rcontrasena,
+                selectedOption: this.selectedOption,
+            }
+        };
+        this.presentAlert('Correcto','Sesión iniciada correctamente');
+        this.router.navigate(['/formulario'], navigationExtras);
     } else {
-      this.presentAlert('Error', 'Usuario o contraseña incorrectos');
+        this.presentAlert('Error', 'Usuario o contraseña incorrectos');
     }
-  }
-  
+}
+
 
   async presentAlert(header: string, mesagge: string){
     const alert = await this.alertControler.create({

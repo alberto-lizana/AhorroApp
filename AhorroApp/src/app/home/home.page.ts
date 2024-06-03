@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { trigger, style, transition, animate, state } from '@angular/animations';
 import { NavigationExtras } from '@angular/router';
@@ -44,15 +44,6 @@ export class HomePage {
     });
     await alert.present();
   }
-
-  mostrarDatos() {
-    if (this.nombre.trim() === '' || this.apellido.trim() === '') {
-      this.presentAlert('Error', 'Nombre o apellido vacío');
-    } else {
-      this.presentAlert('Correcto', 'Su nombre es: ' + this.nombre + ' ' + this.apellido);
-    }
-  }
-  
 
   limpiarDatos() {
     if (this.nombre.trim() !== '' || this.apellido.trim() !== '') {
