@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { trigger, style, transition, animate, state } from '@angular/animations';
@@ -33,7 +33,7 @@ export class HomePage {
   Rcontrasena: string = "";
   selectedOption: string = "";
 
-  constructor(private router: Router, private activateroute: ActivatedRoute,private alertController: AlertController,) {}
+  constructor(private router: Router,private alertController: AlertController,) {}
 
 
   async presentAlert(header: string, message: string) {
