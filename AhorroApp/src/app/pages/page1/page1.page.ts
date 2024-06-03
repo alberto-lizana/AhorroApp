@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-
 
 @Component({
   selector: 'app-page1',
@@ -20,16 +19,28 @@ export class Page1Page implements OnInit {
   porcentaje: number = 0;
   ahorroMensual: number = 0;
   tiempoParaAlcanzarMeta: number = 0;
+  montoDisponible: number = 0;
+  montoEnReduccion: number = 0;
 
-  tab: any;
+  valorASumarMercaderia: number = 0;
+  valorTotalMercaderia: number = 0;
+
+  valorASumarServicios: number = 0;
+  valorTotalServicios: number = 0;
+
+  valorASumarEntretenimiento: number = 0;
+  valorTotalEntretenimiento: number = 0;
+
+  porcentajeMercaderia: number = 0;
+  porcentajeServicios: number = 0;
+  porcentajeEntretenimiento: number = 0;
 
   constructor(
-    private router: Router, 
-    private activateroute: ActivatedRoute,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
-
-  ) {  
-    this.activateroute.queryParams.subscribe(params => {
+  ) {
+    this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras?.state) {
         this.nombre = this.router.getCurrentNavigation()?.extras?.state?.['nombre'];
         this.apellido = this.router.getCurrentNavigation()?.extras?.state?.['apellido'];
@@ -39,79 +50,95 @@ export class Page1Page implements OnInit {
         this.sueldo = this.router.getCurrentNavigation()?.extras?.state?.['sueldo'];
         this.montoObjetivo = this.router.getCurrentNavigation()?.extras?.state?.['montoObjetivo'];
         this.porcentaje = this.router.getCurrentNavigation()?.extras?.state?.['porcentaje'];
-
         this.ahorroMensual = this.router.getCurrentNavigation()?.extras?.state?.['ahorroMensual'];
         this.tiempoParaAlcanzarMeta = this.router.getCurrentNavigation()?.extras?.state?.['tiempoParaAlcanzarMeta'];
+        this.montoDisponible = this.router.getCurrentNavigation()?.extras?.state?.['montoDisponible'];
       }
     });
   }
-  
+
   ngOnInit() {
+    this.loadState();
   }
 
-  updatePercentage(event: any) {
-    this.porcentaje = event.detail.value;
-  }
-
-  updatePercentageInput(event: any) {
-    const value = parseInt(event.target.value, 10);
-    if (value >= 0 && value <= 100) {
-      this.porcentaje = value;
-    } else if (value < 0) {
-      this.porcentaje = 0;
-    } else if (value > 100) {
-      this.porcentaje = 100;
+  loadState() {
+    const savedState = localStorage.getItem('financialState');
+    if (savedState) {
+      const state = JSON.parse(savedState);
+      this.montoEnReduccion = state.montoEnReduccion ?? this.montoDisponible; // Mantén el monto si existe, o usa montoDisponible
+      this.valorTotalMercaderia = state.valorTotalMercaderia;
+      this.valorTotalServicios = state.valorTotalServicios;
+      this.valorTotalEntretenimiento = state.valorTotalEntretenimiento;
+      this.porcentajeMercaderia = state.porcentajeMercaderia;
+      this.porcentajeServicios = state.porcentajeServicios;
+      this.porcentajeEntretenimiento = state.porcentajeEntretenimiento;
+    } else {
+      this.montoEnReduccion = this.montoDisponible; // Inicializa montoEnReduccion si no hay estado guardado
     }
   }
 
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header: header,
-      message: message,
-      buttons: ['Aceptar']
-    });
-    await alert.present();
-  }
-    
-  AhorroMensual() {
-    return this.sueldo * (this.porcentaje / 100);
-  }
-
-  TiempoParaAlcanzarMeta() {
-    let ahorroMensual = this.AhorroMensual();
-    let tiempo = this.montoObjetivo / ahorroMensual;
-    return parseFloat(tiempo.toFixed(1));
+  saveState() {
+    const state = {
+      montoEnReduccion: this.montoEnReduccion,
+      valorTotalMercaderia: this.valorTotalMercaderia,
+      valorTotalServicios: this.valorTotalServicios,
+      valorTotalEntretenimiento: this.valorTotalEntretenimiento,
+      porcentajeMercaderia: this.porcentajeMercaderia,
+      porcentajeServicios: this.porcentajeServicios,
+      porcentajeEntretenimiento: this.porcentajeEntretenimiento
+    };
+    localStorage.setItem('financialState', JSON.stringify(state));
   }
 
-  crearMeta() {
-    const regex = /^[0-9]+$/;
-    // Verificar si los campos están llenos
-    if (this.sueldo <= 0 || this.montoObjetivo <= 0 || this.porcentaje < 0) {
-      return this.presentAlert('Error', 'Por favor, llene todos los campos');
+  async sumarGasto(categoria: string, valorASumar: number) {
+    if (valorASumar > this.montoEnReduccion) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'El monto del gasto excede el monto disponible.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
     }
 
-    // Validar con expresiones regulares
-    else if (!regex.test(this.sueldo.toString()) || !regex.test(this.montoObjetivo.toString()) || !regex.test(this.porcentaje.toString())) {
-      return this.presentAlert('Error', 'Los campos deben contener solo números enteros');
+    switch (categoria) {
+      case 'mercaderia':
+        this.valorTotalMercaderia += valorASumar;
+        this.montoEnReduccion -= valorASumar;
+        break;
+      case 'servicios':
+        this.valorTotalServicios += valorASumar;
+        this.montoEnReduccion -= valorASumar;
+        break;
+      case 'entretenimiento':
+        this.valorTotalEntretenimiento += valorASumar;
+        this.montoEnReduccion -= valorASumar;
+        break;
+      default:
+        break;
     }
-    else {
-      let navigationExtras: NavigationExtras = {
-        state: {
-          nombre: this.nombre,
-          apellido: this.apellido,
-          usuario: this.usuario,
-          contrasena: this.contrasena,
-  
-          sueldo: this.sueldo,
-          montoObjetivo: this.montoObjetivo,
-          porcentaje: this.porcentaje,
-          ahorroMensual: this.ahorroMensual,
-          tiempoParaAlcanzarMeta: this.tiempoParaAlcanzarMeta
-        }
-      };
-      }
-      return this.presentAlert('¡Éxito!', 'Meta creada exitosamente');
-      }
+    this.calcularPorcentaje();
+    this.saveState();
   }
 
+  calcularPorcentaje() {
+    if (this.montoDisponible > 0) {
+      this.porcentajeMercaderia = Math.round((this.valorTotalMercaderia / this.montoDisponible) * 100);
+      this.porcentajeServicios = Math.round((this.valorTotalServicios / this.montoDisponible) * 100);
+      this.porcentajeEntretenimiento = Math.round((this.valorTotalEntretenimiento / this.montoDisponible) * 100);
+    } else {
+      this.porcentajeMercaderia = 0;
+      this.porcentajeServicios = 0;
+      this.porcentajeEntretenimiento = 0;
+    }
+  }
 
+  reiniciar() {
+    this.valorTotalMercaderia = 0;
+    this.valorTotalServicios = 0;
+    this.valorTotalEntretenimiento = 0;
+    this.montoEnReduccion = this.montoDisponible;
+    this.calcularPorcentaje();
+    this.saveState();
+  }
+}

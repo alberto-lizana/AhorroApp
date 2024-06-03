@@ -20,68 +20,51 @@
   <div class="ion-text-center">
     <ion-card-content>
       <ion-item>
-        <ion-label position="floating">Sueldo</ion-label>
-        <ion-input type="text" placeholder="Ingrese Sueldo" [(ngModel)]="sueldo" required></ion-input>
+        <p>
+          Según los datos que nos has proporcionado, 
+          deseamos ayudarte a distribuir tus gastos de manera más eficiente, adaptándonos a tus necesidades. 
+          Por ello, hemos subdividido tus gastos en diferentes categorías: <br>
+          1.- Mercadería (compras de supermercado, comida, etc.) <br>
+          2.- Servicios (luz, agua, gas, internet, colegios, bencina, transporte, arriendo, hipoteca, salud, etc.) <br>
+          3.- Entretenimiento (salidas, cine, teatro, deportes, etc.) <br>
+          Esta subdivisión te permitirá tener un mayor control sobre tus finanzas y optimizar tu capacidad de ahorro. <br>
+        </p>
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Monto Objetivo</ion-label>
-        <ion-input type="text" placeholder="Ingrese Ahorro Objetivo" [(ngModel)]="montoObjetivo" required></ion-input>
+        <ion-label position="stacked">Monto disponible</ion-label>
+        <p>Disponible: {{ montoEnReduccion }}</p>
       </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Porcentaje</ion-label>
-        <ion-range class="custom-range" min="0" max="100" step="1" (ionChange)="updatePercentage($event)">
-          <ion-label slot="start">0%</ion-label>
-          <ion-label slot="end" class="pequeño">
-            <ion-input type="number" [(ngModel)]="porcentaje" (ionChange)="updatePercentageInput($event)" required></ion-input>
-          </ion-label>
-        </ion-range>
-      </ion-item>
+      
     </ion-card-content>
   </div>
 
-  <ion-card>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col class="text-left">
-            <h3>Ahorro mensual con el porcentaje seleccionado:</h3>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="text-left">
-            <h4 [(ngModel)]="ahorroMensual">{{ AhorroMensual() }}</h4>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="text-left">
-            <h3>Meses para alcanzar el monto objetivo:</h3>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="text-left">
-            <h4 [(ngModel)]="tiempoParaAlcanzarMeta">{{ TiempoParaAlcanzarMeta() }}</h4>
-          </ion-col>
-        </ion-row>
+  <ion-item>
+    <ion-label position="stacked">Mercadería</ion-label>
+    <ion-input type="number" placeholder="Ingresa un valor" [(ngModel)]="valorASumarMercaderia"></ion-input>
+    <ion-button color="medium" (click)="sumarGasto('mercaderia', valorASumarMercaderia)">Sumar</ion-button>
+    <p>Disponible: {{ montoEnReduccion }}</p>
+    <p>Equivalente al porcentaje: {{ porcentajeMercaderia }}%</p> 
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="stacked">Servicios</ion-label>
+    <ion-input type="number" placeholder="Ingresa un valor" [(ngModel)]="valorASumarServicios"></ion-input>
+    <ion-button color="medium" (click)="sumarGasto('servicios', valorASumarServicios)">Sumar</ion-button>
+    <p>Disponible: {{ montoEnReduccion }}</p>
+    <p>Equivalente al porcentaje: {{ porcentajeServicios }}%</p> 
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="stacked">Entretenimiento</ion-label>
+    <ion-input type="number" placeholder="Ingresa un valor" [(ngModel)]="valorASumarEntretenimiento"></ion-input>
+    <ion-button color="medium" (click)="sumarGasto('entretenimiento', valorASumarEntretenimiento)">Sumar</ion-button>
+    <p>Disponible: {{ montoEnReduccion }}</p>
+    <p>Equivalente al porcentaje: {{ porcentajeEntretenimiento }}%</p> 
+  </ion-item>
 
-        <ion-row>
-          <ion-col class="text-left">
-            <ion-card-content>
-              <ion-button type="button" expand="block" color="medium" (click)="crearMeta()">Crear Meta</ion-button>
-            </ion-card-content>
-          </ion-col>
-        </ion-row>
-
-        <p>{{sueldo}}</p>
-        <p>{{montoObjetivo}}</p>
-        <p>{{porcentaje}}</p>
-        <p>{{ahorroMensual}}</p>
-        <p>{{tiempoParaAlcanzarMeta}}</p>
-
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
+  <ion-item>
+    <ion-button expand="block" color="medium" (click)="reiniciar()">Reiniciar</ion-button>
+  </ion-item>
 
 </ion-content>
