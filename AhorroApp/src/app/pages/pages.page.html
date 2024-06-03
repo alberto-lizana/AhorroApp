@@ -1,0 +1,52 @@
+<ion-header [translucent]="true" class="ion-text-center">
+  <ion-toolbar>
+    <ion-title> {{ titulo }} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-text-center">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large"> {{ titulo }} </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="ion-text-center">
+  <ion-card>
+    <ion-card-title>
+      <h1>Bienvenido! {{nombre}} {{apellido}}</h1>
+    </ion-card-title>
+  </ion-card>
+
+  <ion-tabs (ionTabsDidChange)="cambiarTitulo($event)">
+    <ion-tab-bar slot="button">
+      <ion-tab-button (click) = "TransferenciaDeDatos('page0')" tab="page0">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click) = "TransferenciaDeDatos('page1')" tab="page1">
+        <ion-icon name="cash-outline"></ion-icon>
+        <ion-label>Presupuesto</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click) = "TransferenciaDeDatos('page2')" tab="page2">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label>Progreso</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click) = "TransferenciaDeDatos('page4')" tab="page4">
+        <ion-icon name="storefront-outline"></ion-icon>
+        <ion-label>Ofertas</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click) = "TransferenciaDeDatos('page3')" tab="page3">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-tabs>
+</div>
+
+</ion-content>

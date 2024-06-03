@@ -1,0 +1,76 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>formulario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">formulario</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="ion-text-center">
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Sueldo</ion-label>
+        <ion-input type="text" placeholder="Ingrese Sueldo" [(ngModel)]="sueldo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Monto Objetivo</ion-label>
+        <ion-input type="text" placeholder="Ingrese Ahorro Objetivo" [(ngModel)]="montoObjetivo" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Porcentaje</ion-label>
+        <ion-range class="custom-range" min="0" max="100" step="1" (ionChange)="actualizarPorcentaje($event)">
+          <ion-label slot="start">0%</ion-label>
+          <ion-label slot="end" class="pequeño">
+            <ion-input type="number" [(ngModel)]="porcentaje" (ionChange)="actualizarPorcentajeInput($event)" required></ion-input>
+          </ion-label>
+        </ion-range>
+      </ion-item>
+
+
+        <ion-label class="hidden-label" [(ngModel)]="montoDisponible"> {{montoDisponible}}</ion-label>
+
+    </ion-card-content>
+  </div>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="text-left">
+            <h3>Ahorro mensual con el porcentaje seleccionado:</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="text-left">
+            <h4>{{ AhorroMensual() }}</h4>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="text-left">
+            <h3>Meses para alcanzar el monto objetivo:</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="text-left">
+            <h4>{{ TiempoParaAlcanzarMeta() }}</h4>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="text-left">
+            <ion-card-content>
+              <ion-button type="button" expand="block" color="medium" (click)="crearMeta()">Crear Meta</ion-button>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

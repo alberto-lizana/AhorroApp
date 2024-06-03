@@ -1,0 +1,144 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      SkeletonApp
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title>
+        SkeletonApp
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div>
+    <ion-card>
+      <ion-card-title class="ion-text-center">
+        <h1>Bienvenido!</h1>
+      </ion-card-title>
+
+      <ion-card-title class="ion-text-center">
+        <h3>Crear Cuenta</h3>
+      </ion-card-title>
+
+      <div [@slideInOut]="animationState">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="auto">
+              <ion-item lines="none">
+                <ion-label>Nombre</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-input type="text" placeholder="Ingrese nombre" [(ngModel)]="nombre" name="nombre" required></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <div [@slideInOut]="animationState">
+        <ion-grid class="ion-text-center">
+          <ion-row>
+            <ion-col size="auto">
+              <ion-item lines="none">
+                <ion-label>Apellido</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-input type="text" placeholder="Ingrese apellido" [(ngModel)]="apellido" name="apellido" required></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto">
+            <ion-item lines="none">
+              <ion-label>Nivel Educación</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-select placeholder="Seleccione Nivel" [(ngModel)]="selectedOption" name="selectedOption">
+                <ion-select-option value="0">Universitario</ion-select-option>
+                <ion-select-option value="1">Magister</ion-select-option>
+                <ion-select-option value="2">Doctorado</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto">
+            <ion-item lines="none">
+              <ion-label>Usuario</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input type="text" maxlenght="8" minlength="3" placeholder="Ingrese Usuario" [(ngModel)]="usuario" name="usuario" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto">
+            <ion-item lines="none">
+              <ion-label>Contraseña</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input type="password" maxlenght="4" placeholder="Ingrese nombre" [(ngModel)]="contrasena" name="contrasena" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto">
+            <ion-item lines="none">
+              <ion-label>Repetir Contraseña</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input maxlenght="4" type="password" placeholder="Ingrese nombre" [(ngModel)]="Rcontrasena" name="Rcontrasena" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid class="ion-text-center">
+        <ion-row>
+          <ion-col>
+            <ion-card-content>
+              <ion-button expand="block" color="medium" (click)="limpiarDatos()">Limpiar</ion-button>
+            </ion-card-content>
+          </ion-col>
+          <ion-col>
+            <ion-card-content>
+              <ion-button expand="block" color="medium" (click)="CrearCuenta()">Enviar</ion-button>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card>
+  </div>
+</ion-content>
